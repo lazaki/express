@@ -17,7 +17,7 @@ ReactDOM.render(
     <Router history={history}>
       <Switch>
         <Route
-          path="/search" component={Search}
+          path="/" component={Search}
         />
         <Route
           path="/login" component={Login}
