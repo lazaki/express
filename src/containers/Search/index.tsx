@@ -41,7 +41,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    
     loadDataForCount:(startDate,endDate,count,extense)=> dispatch(searchFormActions.loadDataForCount(startDate,endDate,count,extense)),
     loadDataForDate:(startDate,endDate)=> dispatch(searchFormActions.loadDataForDate(startDate,endDate))
   };
