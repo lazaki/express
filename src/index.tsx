@@ -3,12 +3,14 @@ import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, Route, Switch, Redirect } from 'react-router';
 import { createBrowserHistory } from 'history';
-import { configureStore } from './store';
+import configureStore from './store/configureStore';
+import { loadCounts } from './actions/searchFormActions';
 import { Search } from './containers/Search';
 import { Login } from './containers/Login';
 
 
 const store = configureStore();
+store.dispatch(loadCounts());
 const history = createBrowserHistory();
 
 
@@ -17,7 +19,7 @@ ReactDOM.render(
     <Router history={history}>
       <Switch>
         <Route
-          path="/search" component={Search}
+          path="/" component={Search}
         />
         <Route
           path="/login" component={Login}

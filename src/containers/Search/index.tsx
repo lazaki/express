@@ -1,16 +1,17 @@
 import * as React from 'react';
-import * as TodoActions from '../../actions/todos';
 import * as style from './style.css';
+import * as searchFormActions from '../../actions/searchFormActions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { RootState } from '../../reducers';
-import { Header, MainSection } from '../../components';
+import { Header, MainSection } from '../../components/SearchForm';
 
 export namespace Search {
   export interface Props extends RouteComponentProps<void> {
-    todos: TodoItemData[];
-    actions: typeof TodoActions;
+    data:Array<any>;
+    counts:Array<any>;
+    loadDataForDate: (startDate,endDate)=>void;
+    loadDataForCount:  (startDate,endDate,count,esxtense)=>void;
   }
 
   export interface State {
@@ -22,25 +23,26 @@ export namespace Search {
 export class Search extends React.Component<Search.Props, Search.State> {
 
   render() {
-    const { todos, actions, children } = this.props;
     return (
       <div className={style.searchContainer}>
-        <Header/>
-        <MainSection/>
-        {children}
+        <Header counts= {this.props.counts} data = {this.props.data} loadDataForDate = {this.props.loadDataForDate} loadDataForCount = {this.props.loadDataForCount}/>
+        <MainSection data = {this.props.data}/>
       </div>
     );
   }
 }
 
-function mapStateToProps(state: RootState) {
+function mapStateToProps(state) {
   return {
-    todos: state.todos
+    data: state.data,
+    counts: state.counts
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(TodoActions as any, dispatch)
+    
+    loadDataForCount:(startDate,endDate,count,extense)=> dispatch(searchFormActions.loadDataForCount(startDate,endDate,count,extense)),
+    loadDataForDate:(startDate,endDate)=> dispatch(searchFormActions.loadDataForDate(startDate,endDate))
   };
 }

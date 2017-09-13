@@ -1,10 +1,10 @@
-import { combineReducers, Reducer } from 'redux';
-import todos from './todos';
+import { combineReducers } from 'redux';
+import data from './searchFormReducer';
+import counts from './countReducer';
 
-export interface RootState {
-  todos: TodoStoreState;
-}
-
-export default combineReducers<RootState>({
-  todos
+const rootReducer = combineReducers({
+  data,
+  counts
 });
+
+export default rootReducer;

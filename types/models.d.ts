@@ -1,13 +1,7 @@
-/** TodoMVC model definitions **/
+/** SearchMVC model definitions **/
 
-declare interface TodoItemData {
-  id?: TodoItemId;
-  text?: string;
-  completed?: boolean;
+declare interface SearchItem {
+  
 }
 
-declare type TodoItemId = number;
-
-declare type TodoFilterType = 'SHOW_ALL' | 'SHOW_ACTIVE' | 'SHOW_COMPLETED';
-
-declare type TodoStoreState = TodoItemData[];
+declare type SearchFormState = SearchItem[];
