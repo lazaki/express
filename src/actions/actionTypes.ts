@@ -1,3 +1,4 @@
+export const BEGIN_AJAX_CALL = 'BEGIN_AJAX_CALL';
 export const LOAD_COUNTS = 'LOAD_COUNTS';
 export const LOAD_DATA_FOR_DATE = 'LOAD_DATA_FOR_DATE';
 export const LOAD_DATA_FOR_COUNT = 'LOAD_DATA_FOR_COUNT';

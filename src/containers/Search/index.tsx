@@ -10,6 +10,7 @@ export namespace Search {
   export interface Props extends RouteComponentProps<void> {
     data:Array<any>;
     counts:Array<any>;
+    loading: boolean;
     loadDataForDate: (startDate,endDate)=>void;
     loadDataForCount:  (startDate,endDate,count,esxtense)=>void;
   }
@@ -26,7 +27,7 @@ export class Search extends React.Component<Search.Props, Search.State> {
     return (
       <div className={style.searchContainer}>
         <Header counts= {this.props.counts} data = {this.props.data} loadDataForDate = {this.props.loadDataForDate} loadDataForCount = {this.props.loadDataForCount}/>
-        <MainSection data = {this.props.data}/>
+        <MainSection loading = {this.props.loading} data = {this.props.data}/>
       </div>
     );
   }
@@ -35,7 +36,8 @@ export class Search extends React.Component<Search.Props, Search.State> {
 function mapStateToProps(state) {
   return {
     data: state.data,
-    counts: state.counts
+    counts: state.counts,
+    loading: state.ajaxStatus
   };
 }
 

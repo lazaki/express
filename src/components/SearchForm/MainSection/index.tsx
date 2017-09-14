@@ -10,16 +10,22 @@ import {
 import { IRenderFunction } from "@uifabric/utilities/lib";
 import { ITooltipHostProps } from "office-ui-fabric-react/lib/Tooltip";
 import { TooltipHost } from "office-ui-fabric-react/lib/components/Tooltip";
+import {
+  Spinner,
+  SpinnerSize
+} from 'office-ui-fabric-react/lib/Spinner';
 
 
 export namespace MainSection {
   export interface Props {
     data: Array<any>;
+    loading: boolean;
   }
 
   export interface State {
-    items: Array<any>,
-    columns: Array<IColumn>
+    items: Array<any>;
+    columns: Array<IColumn>;
+    message: string;
   }
 }
 
@@ -32,7 +38,8 @@ export class MainSection extends React.Component<MainSection.Props, MainSection.
     });
     this.state = {
       items: [],
-      columns: []
+      columns: [],
+      message: "Odaberite kriterijum za pretragu"
     };
     this.setFieldName = this.setFieldName.bind(this);
   }
@@ -68,20 +75,20 @@ export class MainSection extends React.Component<MainSection.Props, MainSection.
 
   private formatDAte(date) {
     var dd = date.getDate();
-    var mm = date.getMonth()+1; //January is 0!
-    
+    var mm = date.getMonth() + 1; //January is 0!
+
     var yyyy = date.getFullYear();
-    if(dd<10){
-        dd='0'+dd;
-    } 
-    if(mm<10){
-        mm='0'+mm;
-    } 
-    return dd+'.'+mm+'.'+yyyy;
+    if (dd < 10) {
+      dd = '0' + dd;
+    }
+    if (mm < 10) {
+      mm = '0' + mm;
+    }
+    return dd + '.' + mm + '.' + yyyy;
   }
 
   private createColumns(nextProps): Array<IColumn> {
-    return nextProps.data[0] && Object.keys(nextProps.data[0]).map(key=>{
+    return nextProps.data[0] && Object.keys(nextProps.data[0]).map(key => {
       let fieldName = this.setFieldName(key);
       return {
         key: key,
@@ -90,27 +97,30 @@ export class MainSection extends React.Component<MainSection.Props, MainSection.
         minWidth: 100,
         isResizable: true
       }
-    }).filter(column=>{return column.key!=="Id"});
+    }).filter(column => { return column.key !== "Id" });
   }
 
 
   render() {
-    return (
-      <section className={style.searchTable}>
-        {this.props.data.length>0?
-          <DetailsList
-          items={this.state.items.map(item=>{return {...item, Date:this.formatDAte(new Date(item.Date))}})}
-          columns={this.state.columns}
-          setKey='set'
-          layoutMode={DetailsListLayoutMode.fixedColumns}
-          selection={this._selection}
-          selectionPreservedOnEmptyClick={true}
-          onItemInvoked={(item) => alert(`Item invoked: ${item.Title}`)
-          }
-        />:"Nema podataka za zadati kriterijum"
-        }
+    let element;
+    if (this.props.loading) {
+      element = <div className={style.infoMessageContainer}> <Spinner size={SpinnerSize.large} label='Učitavanje podataka....' ariaLive='assertive' /></div>
+    } else if (this.props.data.length > 0) {
+      element = <DetailsList
+        items={this.state.items.map(item => { return { ...item, Date: this.formatDAte(new Date(item.Date)) } })}
+        columns={this.state.columns}
+        setKey='set'
+        layoutMode={DetailsListLayoutMode.fixedColumns}
+        selection={this._selection}
+        selectionPreservedOnEmptyClick={true}
+        onItemInvoked={(item) => alert(`Item invoked: ${item.Title}`)}
+      />
 
-      </section>
-    );
+    } else {
+      element = <div className={style.infoMessageContainer}>Nema podataka za zadatu pretragu</div>
+    }
+    return <section className={style.searchTable}>
+      {element}
+    </section>
   }
 }

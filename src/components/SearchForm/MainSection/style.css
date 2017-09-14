@@ -21,3 +21,10 @@ div[class^="ms-FocusZone ms-DetailsHeader"]  {
     width: 100vw!important;
     z-index: 99!important;
 }
+
+.infoMessageContainer {
+    height: 90%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
