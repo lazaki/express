@@ -25,7 +25,6 @@ export namespace MainSection {
   export interface State {
     items: Array<any>;
     columns: Array<IColumn>;
-    message: string;
   }
 }
 
@@ -38,8 +37,7 @@ export class MainSection extends React.Component<MainSection.Props, MainSection.
     });
     this.state = {
       items: [],
-      columns: [],
-      message: "Odaberite kriterijum za pretragu"
+      columns: []
     };
     this.setFieldName = this.setFieldName.bind(this);
   }
