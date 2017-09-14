@@ -66,6 +66,20 @@ export class MainSection extends React.Component<MainSection.Props, MainSection.
     }
   }
 
+  private formatDAte(date) {
+    var dd = date.getDate();
+    var mm = date.getMonth()+1; //January is 0!
+    
+    var yyyy = date.getFullYear();
+    if(dd<10){
+        dd='0'+dd;
+    } 
+    if(mm<10){
+        mm='0'+mm;
+    } 
+    return dd+'.'+mm+'.'+yyyy;
+  }
+
   private createColumns(nextProps): Array<IColumn> {
     return nextProps.data[0] && Object.keys(nextProps.data[0]).map(key=>{
       let fieldName = this.setFieldName(key);
@@ -83,8 +97,9 @@ export class MainSection extends React.Component<MainSection.Props, MainSection.
   render() {
     return (
       <section className={style.searchTable}>
-        <DetailsList
-          items={this.state.items}
+        {this.props.data.length>0?
+          <DetailsList
+          items={this.state.items.map(item=>{return {...item, Date:this.formatDAte(new Date(item.Date))}})}
           columns={this.state.columns}
           setKey='set'
           layoutMode={DetailsListLayoutMode.fixedColumns}
@@ -92,7 +107,9 @@ export class MainSection extends React.Component<MainSection.Props, MainSection.
           selectionPreservedOnEmptyClick={true}
           onItemInvoked={(item) => alert(`Item invoked: ${item.Title}`)
           }
-        />
+        />:"Nema podataka za zadati kriterijum"
+        }
+
       </section>
     );
   }

@@ -1,4 +1,5 @@
 .searchTable {
     margin-top: 220px;
     overflow: auto;
+    height: calc(100vh - 220px);
 }

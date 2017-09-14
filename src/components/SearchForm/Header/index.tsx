@@ -45,7 +45,7 @@ export class Header extends React.Component<Header.Props, Header.State> {
   }
 
   componentWillReceiveProps(nextProps) {
-     _testTags = nextProps.counts.map(data=>{return { key: data.Id, name: data.Title.toString() }})
+     _testTags = nextProps.counts.map(data=>{return { key: data.Id, name: data }})
   }
 
   
@@ -139,19 +139,17 @@ export class Header extends React.Component<Header.Props, Header.State> {
           />
         </div>
         <div className={style.searchRow}>
-          <ChoiceGroup
-            className = {style.choiseGroup}
-            onChange={ (ev,option) =>{this.setState({...this.state,filter:option.key})} }
-            options={Object.keys(ExpensesType).map((key,index,array) => 
-              {
-              return { 
-                key:array[index],
-                text:ExpensesType[key]
-                }
-              }
-            ).filter(v => typeof v.text === "string")}
-            label='Filtriraj:'
-          />
+          <Label>Filtriraj</Label>
+        {Object.keys(ExpensesType).map((key,index,array)=>{
+          return {
+            key:array[index],
+            text:ExpensesType[key]
+          }
+          }).filter((item) =>{
+              return item.text.length>1;
+            }
+            ).map(i=>{return <PrimaryButton checked={i.key===this.state.filter} text = {i.text} onClick = {()=>(this.setState({...this.state,filter:i.key}),
+              this.props.loadDataForCount(this.state.periodOd,this.state.periodDo,this.state.konto,i.key))}/>})}
         </div>
         <div className={style.searchRow}>
         <TextField

@@ -1,16 +1,16 @@
 import delay from './delay';
 import data from './data';
-import {ExpensesType} from '../constants/extensesTypes'
-import {Places} from '../constants/places'
+import { ExpensesType } from '../constants/extensesTypes'
+import { Places } from '../constants/places'
 // This file mocks a web API by working with the hard-coded data below.
 // It uses setTimeout to simulate the delay of an AJAX call.
 // All calls return promises.
 
 function formatDate(date) {
   var d = date,
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
+    month = '' + (d.getMonth() + 1),
+    day = '' + d.getDate(),
+    year = d.getFullYear();
 
   if (month.length < 2) month = '0' + month;
   if (day.length < 2) day = '0' + day;
@@ -20,31 +20,24 @@ function formatDate(date) {
 
 class DataApi {
 
-  static getDataForDate(startDate,endDate) {
-      return fetch(`http://service.novogodisnjiukrasi.rs/api/expense/GetExpenseForVehicle/2016-01-01/2016-06-30/3/253`).then((response)=>{
-          return response.json();
-      })
+  static getDataForDate(startDate, endDate) {
+    return fetch(`http://service.novogodisnjiukrasi.rs/api/expense/GetExpenseForVehicle/2016-01-01/2016-06-30/3/253`).then((response) => {
+      return response.json();
+    })
   }
 
-  static getDataForCount(startDate,endDate,count,extense) {
-    return fetch(`http://service.novogodisnjiukrasi.rs/api/expense/GetExpenseForVehicle/${formatDate(startDate)}/${formatDate(endDate)}/${extense}/${count}`).then((response)=>{
-        return response.json();
+  static getDataForCount(startDate, endDate, count, extense) {
+    return fetch(`http://service.novogodisnjiukrasi.rs/api/expense/GetExpenseForVehicle/${formatDate(startDate)}/${formatDate(endDate)}/${extense}/${count}`).then((response) => {
+      return response.json();
     })
-}
+  }
 
   static getCounts() {
-    let defaultData = data.map((d,index)=>{
-      return {
-        Id: index,
-        Title: d.Count.toString()
-      }
-    });
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(Object.assign([], defaultData));
-      }, delay);
-    });
+    return fetch(`http://service.novogodisnjiukrasi.rs/api/vehicle/getallcount`).then((response) => {
+      return response.json();
+    })
   }
+
 }
 
 export default DataApi;

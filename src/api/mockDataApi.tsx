@@ -53,10 +53,7 @@ class DataApi {
 
   static getCounts() {
     let defaultData = data.map((item,index)=>{
-      return {
-        Id: index,
-        Title: Math.floor((Math.random() * 500) + 1).toString()
-      }
+      return Math.floor((Math.random() * 500) + 1).toString()
     });
     return new Promise((resolve, reject) => {
       setTimeout(() => {
