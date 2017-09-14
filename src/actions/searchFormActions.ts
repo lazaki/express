@@ -3,15 +3,17 @@ import * as types from './actionTypes';
 //import api from '../api/mockDataApi';
 import api from '../api/prodDataApi';
 import {beginAjaxCall} from './ajaxSatusActions';
-
+import { ToastContainer, toast } from 'react-toastify';
 
 export function loadDataForDate(startDate,endDate) {
     return function(dispact){
         dispact(beginAjaxCall());
-        return api.getDataForDate(startDate,endDate).then( data =>{
+        return api.getDataForDate(startDate,endDate)
+        .then( data =>{
             dispact(loadDataSuccess(data));
-        }).catch(error=>{
-            throw(error);
+        })
+        .catch(error=>{
+            toast.error(error);
         })
     }
 }
@@ -20,10 +22,12 @@ export function loadDataForDate(startDate,endDate) {
 export function loadDataForCount(startDate,endDate,count,extense) {
     return function(dispact){
         dispact(beginAjaxCall());
-        return api.getDataForCount(startDate,endDate,count,extense).then( data =>{
+        return api.getDataForCount(startDate,endDate,count,extense)
+        .then( data =>{
             dispact(loadDataSuccess(data));
-        }).catch(error=>{
-            throw(error);
+        })
+        .catch(error=>{
+            toast.error(error);
         })
     }
 }
@@ -34,7 +38,7 @@ export function loadCounts() {
         return api.getCounts().then( counts =>{
             dispact(loadCountsSuccess(counts));
         }).catch(error=>{
-            throw(error);
+            toastr.error(error);
         })
     }
 }

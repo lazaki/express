@@ -7,6 +7,7 @@ import configureStore from './store/configureStore';
 import { loadCounts } from './actions/searchFormActions';
 import { Search } from './containers/Search';
 import { Login } from './containers/Login';
+import 'react-toastify/dist/ReactToastify.min.css' 
 
 
 const store = configureStore();
