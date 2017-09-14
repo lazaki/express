@@ -70,7 +70,7 @@ export class Header extends React.Component<Header.Props, Header.State> {
           <PrimaryButton
             data-automation-id='test'
             text='Pretraži'
-            onClick={() =>{ this.props.loadDataForCount(this.state.periodOd,this.state.periodDo,this.state.konto,this.state.filter)}}
+            onClick={() =>{ alert("Rade, napravi servis!")}}
           />
           <ChoiceGroup
             className = {style.choiseGroup}
@@ -120,7 +120,7 @@ export class Header extends React.Component<Header.Props, Header.State> {
           <PrimaryButton
             data-automation-id='test'
             text='Izlistaj sve intervencije za dati konto'
-            onClick={() => this.props.loadDataForCount(this.state.periodOd,this.state.periodDo,this.state.konto,this.state.filter)}
+            onClick={() => alert("Rade, napravi servis!")}
           />
           <PrimaryButton
             data-automation-id='test'
