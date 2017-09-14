@@ -1,16 +1,23 @@
+body {
+    overflow: hidden;
+}
+
 .searchTable {
-    margin-top: 251px;
+    margin-top: 253px;
     overflow: auto;
-    height: calc(100vh - 251px);
+    height: calc(100vh - 250px);
 }
 
-#root > div > section > div > div > div > div:nth-child(1) {
-    position: fixed;
-    top: 216px;
-    width: 100vw;
-    z-index: 99;
+#root > div > section > div > div > div > div:nth-child(1) > div {
+    position: fixed!important;
+    top: 216px!important;
+    width: 100vw!important;
+    z-index: 99!important;
 }
 
-#root > div > section > div > div > div > div:nth-child(2) {
-    padding-top: 50px;
+div[class^="ms-FocusZone ms-DetailsHeader"]  {
+    position: fixed!important;
+    top: 216px!important;
+    width: 100vw!important;
+    z-index: 99!important;
 }
