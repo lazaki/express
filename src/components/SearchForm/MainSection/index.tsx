@@ -19,7 +19,7 @@ import {
 export namespace MainSection {
   export interface Props {
     data: Array<any>;
-    loading: boolean;
+    ajaxStatus: any;
   }
 
   export interface State {
@@ -103,24 +103,35 @@ export class MainSection extends React.Component<MainSection.Props, MainSection.
 
   render() {
     let element;
-    if (this.props.loading) {
-      element = <div className={style.infoMessageContainer}> <Spinner size={SpinnerSize.large} label='Učitavanje podataka....' ariaLive='assertive' /></div>
-    } else if (this.props.data.length > 0) {
-      element = <DetailsList
+    switch(this.props.ajaxStatus.status) {
+      case "ERROR":
+      console.log(this.props.ajaxStatus.status)
+        element = <div className={`${style.infoMessageContainer} ${style.errorMessage}`}>
+                  Greška prilikom učitavanja podataka, proverite da li su sva potrebna polja popunjena
+                  </div>
+        break;
+      case "LOADING": 
+        element = <div className={style.infoMessageContainer}> <Spinner size={SpinnerSize.large} label='Učitavanje podataka....' ariaLive='assertive' /></div>
+        break;
+      case "SUCCESS":
+        if(this.props.data.length===0) {
+          element = <div className={style.infoMessageContainer}>
+          Nema podataka za zadatu pretragu!
+          </div>
+          break;
+        }
+        element = <DetailsList
         items={this.state.items.map(item => { return { ...item, Date: this.formatDAte(new Date(item.Date)) } })}
         columns={this.state.columns}
         setKey='set'
         layoutMode={DetailsListLayoutMode.fixedColumns}
         selection={this._selection}
         selectionPreservedOnEmptyClick={true}
-        onItemInvoked={(item) => alert(`Item invoked: ${item.Title}`)}
-      />
-
-    } else {
-      element = <div className={style.infoMessageContainer}>Nema podataka za zadatu pretragu</div>
+        onItemInvoked={(item) => alert(`Item invoked: ${item.Title}`)}/>
+        break;
     }
-    return <section className={style.searchTable}>
-      {element}
-    </section>
+      return <section className={style.searchTable}>
+        {element}
+      </section>
   }
 }

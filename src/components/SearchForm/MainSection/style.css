@@ -28,3 +28,8 @@ div[class^="ms-FocusZone ms-DetailsHeader"]  {
     align-items: center;
     display: flex;
 }
+
+.errorMessage {
+    color: red;
+    font-weight: 300;
+}

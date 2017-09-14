@@ -3,7 +3,10 @@ import * as types from './actionTypes';
 //import api from '../api/mockDataApi';
 import api from '../api/prodDataApi';
 import {beginAjaxCall} from './ajaxSatusActions';
-import { ToastContainer, toast } from 'react-toastify';
+import {ajaxCallError} from './ajaxSatusActions';
+
+import {  toast } from 'react-toastify';
+require('react-toastify/dist/ReactToastify.min.css');
 
 export function loadDataForDate(startDate,endDate) {
     return function(dispact){
@@ -13,7 +16,7 @@ export function loadDataForDate(startDate,endDate) {
             dispact(loadDataSuccess(data));
         })
         .catch(error=>{
-            toast.error(error);
+            dispact(ajaxCallError(error));
         })
     }
 }
@@ -27,7 +30,7 @@ export function loadDataForCount(startDate,endDate,count,extense) {
             dispact(loadDataSuccess(data));
         })
         .catch(error=>{
-            toast.error(error);
+            dispact(ajaxCallError(error));
         })
     }
 }
@@ -38,7 +41,7 @@ export function loadCounts() {
         return api.getCounts().then( counts =>{
             dispact(loadCountsSuccess(counts));
         }).catch(error=>{
-            toastr.error(error);
+            dispact(ajaxCallError(error));
         })
     }
 }
@@ -50,6 +53,8 @@ export function loadDataSuccess(data) {
 export function loadCountsSuccess(counts) {
     return { type: types.LOAD_COUNTS_SUCCESS, counts }
 }
+
+
 
 
 

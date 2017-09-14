@@ -1,5 +1,5 @@
 export default {
     data:[],
     counts:[],
-    ajaxCallInProgress: false
+    ajaxCallInProgress: {status: "CALL",message:"MESSAGE"}
 }
