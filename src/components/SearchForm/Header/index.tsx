@@ -107,15 +107,19 @@ export class Header extends React.Component<Header.Props, Header.State> {
         <div className={style.searchRow}>
         <Label>Za konto</Label>
         <TagPicker ref='tagPicker'
-        onResolveSuggestions={ this._onFilterChanged.bind(this) }
-        getTextFromItem={ (item: any) => { return item.name; } }
-        pickerSuggestionsProps={
-          {
-            suggestionsHeaderText: 'Konto broj',
-            noResultsFoundText: 'Nema zadatog konta'
+          onResolveSuggestions={ this._onFilterChanged.bind(this) }
+          pickerSuggestionsProps={
+            {
+              suggestionsHeaderText: 'Konto broj',
+              noResultsFoundText: 'Nema zadatog konta'
+            }
           }
-        }
-        onChange ={(items)=>{this.setState({...this.state,konto:items[0].name})}}
+          onChange ={(items)=>{
+            items[0]?
+            this.setState({...this.state,konto:items[0].name}):
+            this.setState({...this.state,konto:""})
+            }
+            }
       />
           <PrimaryButton
             data-automation-id='test'
