@@ -21,6 +21,19 @@ export function loadDataForDate(startDate,endDate) {
     }
 }
 
+export function loadExpenses(startDate,endDate,count) {
+    return function(dispact){
+        dispact(beginAjaxCall());
+        return api.getAllExpenses(startDate,endDate,count)
+        .then( data =>{
+            dispact(loadDataSuccess(data));
+        })
+        .catch(error=>{
+            dispact(ajaxCallError(error));
+        })
+    }
+}
+
 
 export function loadDataForCount(startDate,endDate,count,extense) {
     return function(dispact){

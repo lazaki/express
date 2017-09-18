@@ -26,6 +26,12 @@ class DataApi {
     })
   }
 
+  static getAllExpenses(startDate,endDate,count) {
+    return fetch(`http://service.novogodisnjiukrasi.rs/api/workorder/GetWorkOrderForVehicle/${formatDate(startDate)}/${formatDate(endDate)}/${count}`).then((response) => {
+      return response.json();
+    })
+  }
+
   static getDataForCount(startDate, endDate, count, extense) {
     return fetch(`http://service.novogodisnjiukrasi.rs/api/expense/GetExpenseForVehicle/${formatDate(startDate)}/${formatDate(endDate)}/${extense}/${count}`).then((response) => {
       return response.json();

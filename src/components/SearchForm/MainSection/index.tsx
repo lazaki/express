@@ -48,6 +48,12 @@ export class MainSection extends React.Component<MainSection.Props, MainSection.
 
   public setFieldName(key) {
     switch (key) {
+      case "Vehicle":
+        return "Vozilo"
+      case "WorkOrderNumber":
+        return "Broj radnog naloga"
+      case "Description":
+        return "Opis"
       case "ExpensesType":
         return "Tip pretrage"
       case "Count":
@@ -71,7 +77,7 @@ export class MainSection extends React.Component<MainSection.Props, MainSection.
     }
   }
 
-  private formatDAte(date) {
+  private formatDate(date) {
     var dd = date.getDate();
     var mm = date.getMonth() + 1; //January is 0!
 
@@ -88,6 +94,15 @@ export class MainSection extends React.Component<MainSection.Props, MainSection.
   private createColumns(nextProps): Array<IColumn> {
     return nextProps.data[0] && Object.keys(nextProps.data[0]).map(key => {
       let fieldName = this.setFieldName(key);
+      if(fieldName==="Opis") {
+        return {
+          key: key,
+          name: fieldName,
+          fieldName: key,
+          minWidth: 100,
+          isResizable: true
+        }
+      }
       return {
         key: key,
         name: fieldName,
@@ -103,7 +118,6 @@ export class MainSection extends React.Component<MainSection.Props, MainSection.
     let element;
     switch(this.props.ajaxStatus.status) {
       case "ERROR":
-      console.log(this.props.ajaxStatus.status)
         element = <div className={`${style.infoMessageContainer} ${style.errorMessage}`}>
                   Greška prilikom učitavanja podataka, proverite da li su sva potrebna polja popunjena
                   </div>
@@ -119,7 +133,7 @@ export class MainSection extends React.Component<MainSection.Props, MainSection.
           break;
         }
         element = <DetailsList
-        items={this.state.items.map(item => { return { ...item, Date: this.formatDAte(new Date(item.Date)) } })}
+        items={this.state.items.map(item => { return { ...item, Date: this.formatDate(new Date(item.Date)) } })}
         columns={this.state.columns}
         setKey='set'
         layoutMode={DetailsListLayoutMode.fixedColumns}

@@ -16,6 +16,7 @@ export namespace Header {
     counts:Array<any>;
     loadDataForCount:  (startDate,endDate,count,esxtense)=>void;
     loadDataForDate: (startDate,endDate)=>void;
+    loadAllExpenses: (startDate,endDate,count)=>void;
   }
 
   export interface State {
@@ -35,7 +36,7 @@ export class Header extends React.Component<Header.Props, Header.State> {
   constructor(props?: Header.Props, context?: any) {
     super(props, context);
     this.state = {
-      konto: "",
+      konto:"0",
       periodOd: new Date(new Date().setMonth(new Date().getMonth()-1)),
       periodDo: new Date(),
       mesto: "SvaVozila",
@@ -152,7 +153,12 @@ export class Header extends React.Component<Header.Props, Header.State> {
           }).filter((item) =>{
               return item.text.length>1;
             }
-            ).map(i=>{return <PrimaryButton checked={i.key===this.state.filter} text = {i.text} onClick = {()=>(this.setState({...this.state,filter:i.key}),
+            ).map(i=>{
+              if(i.text==="Nalozi") {
+                return <PrimaryButton checked={i.key===this.state.filter} text = {i.text} onClick = {()=>(this.setState({...this.state,filter:i.key}),
+                this.props.loadAllExpenses(this.state.periodOd,this.state.periodDo,this.state.konto))}/>
+              }
+              return <PrimaryButton checked={i.key===this.state.filter} text = {i.text} onClick = {()=>(this.setState({...this.state,filter:i.key}),
               this.props.loadDataForCount(this.state.periodOd,this.state.periodDo,this.state.konto,i.key))}/>})}
         </div>
         <div className={style.searchRow}>
