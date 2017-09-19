@@ -72,6 +72,8 @@ export class MainSection extends React.Component<MainSection.Props, MainSection.
         return "Stanje tahografa"
       case "Place":
         return "Mesto"
+      case "Time":
+        return "Vreme"
       default:
         return key
     }
@@ -100,7 +102,8 @@ export class MainSection extends React.Component<MainSection.Props, MainSection.
           name: fieldName,
           fieldName: key,
           minWidth: 100,
-          isResizable: true
+          isResizable: true,
+          className: style.descriptionTableCell
         }
       }
       return {
@@ -108,9 +111,14 @@ export class MainSection extends React.Component<MainSection.Props, MainSection.
         name: fieldName,
         fieldName: key,
         minWidth: 100,
-        isResizable: true
+        isResizable: true,      
+        className: style.tableCell
       }
-    }).filter(column => { return column.key !== "Id" });
+    }).filter(column => { if(column.key !== "Id" && column.key !== "EndDate") {
+      return true;
+    }
+    return false;
+   });
   }
 
 

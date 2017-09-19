@@ -33,3 +33,12 @@ div[class^="ms-FocusZone ms-DetailsHeader"]  {
     color: red;
     font-weight: 300;
 }
+
+.tableCell {
+    font-size: 16px;
+}
+
+.descriptionTableCell{
+    font-size: 13px;
+    white-space: pre-wrap;
+}
