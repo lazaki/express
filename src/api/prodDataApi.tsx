@@ -26,7 +26,7 @@ class DataApi {
     })
   }
 
-  static getAllExpenses(startDate,endDate,count) {
+  static getWorkOrderForVehicle(startDate,endDate,count) {
     return fetch(`http://service.novogodisnjiukrasi.rs/api/workorder/GetWorkOrderForVehicle/${formatDate(startDate)}/${formatDate(endDate)}/${count}`).then((response) => {
       return response.json();
     })

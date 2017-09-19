@@ -16,7 +16,7 @@ export namespace Header {
     counts:Array<any>;
     loadDataForCount:  (startDate,endDate,count,esxtense)=>void;
     loadDataForDate: (startDate,endDate)=>void;
-    loadAllExpenses: (startDate,endDate,count)=>void;
+    loadWorkOrderForVehicle: (startDate,endDate,count)=>void;
   }
 
   export interface State {
@@ -156,7 +156,7 @@ export class Header extends React.Component<Header.Props, Header.State> {
             ).map(i=>{
               if(i.text==="Nalozi") {
                 return <PrimaryButton checked={i.key===this.state.filter} text = {i.text} onClick = {()=>(this.setState({...this.state,filter:i.key}),
-                this.props.loadAllExpenses(this.state.periodOd,this.state.periodDo,this.state.konto))}/>
+                this.props.loadWorkOrderForVehicle(this.state.periodOd,this.state.periodDo,this.state.konto))}/>
               }
               return <PrimaryButton checked={i.key===this.state.filter} text = {i.text} onClick = {()=>(this.setState({...this.state,filter:i.key}),
               this.props.loadDataForCount(this.state.periodOd,this.state.periodDo,this.state.konto,i.key))}/>})}

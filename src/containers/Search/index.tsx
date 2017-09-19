@@ -13,7 +13,7 @@ export namespace Search {
     ajaxStatus: any;
     loadDataForDate: (startDate,endDate)=>void;
     loadDataForCount:  (startDate,endDate,count,esxtense)=>void;
-    loadAllExpenses: (startDate,endDate,count)=>void;
+    loadWorkOrderForVehicle: (startDate,endDate,count)=>void;
   }
 
   export interface State {
@@ -27,7 +27,7 @@ export class Search extends React.Component<Search.Props, Search.State> {
   render() {
     return (
       <div className={style.searchContainer}>
-        <Header counts= {this.props.counts} data = {this.props.data} loadDataForDate = {this.props.loadDataForDate} loadDataForCount = {this.props.loadDataForCount} loadAllExpenses ={this.props.loadAllExpenses}/>
+        <Header counts= {this.props.counts} data = {this.props.data} loadDataForDate = {this.props.loadDataForDate} loadDataForCount = {this.props.loadDataForCount} loadWorkOrderForVehicle ={this.props.loadWorkOrderForVehicle}/>
         <MainSection ajaxStatus = {this.props.ajaxStatus} data = {this.props.data}/>
       </div>
     );
@@ -44,7 +44,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    loadAllExpenses:(startDate,endDate,count)=> dispatch(searchFormActions.loadExpenses(startDate,endDate,count)),
+    loadWorkOrderForVehicle:(startDate,endDate,count)=> dispatch(searchFormActions.loadWorkOrderForVehicle(startDate,endDate,count)),
     loadDataForCount:(startDate,endDate,count,extense)=> dispatch(searchFormActions.loadDataForCount(startDate,endDate,count,extense)),
     loadDataForDate:(startDate,endDate)=> dispatch(searchFormActions.loadDataForDate(startDate,endDate))
   };

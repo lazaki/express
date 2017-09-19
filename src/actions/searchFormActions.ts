@@ -21,10 +21,10 @@ export function loadDataForDate(startDate,endDate) {
     }
 }
 
-export function loadExpenses(startDate,endDate,count) {
+export function loadWorkOrderForVehicle(startDate,endDate,count) {
     return function(dispact){
         dispact(beginAjaxCall());
-        return api.getAllExpenses(startDate,endDate,count)
+        return api.getWorkOrderForVehicle(startDate,endDate,count)
         .then( data =>{
             dispact(loadDataSuccess(data));
         })
