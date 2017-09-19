@@ -34,6 +34,19 @@ export function loadWorkOrderForVehicle(startDate,endDate,count) {
     }
 }
 
+export function loadAllExtenses(startDate,endDate,count) {
+    return function(dispact){
+        dispact(beginAjaxCall());
+        return api.getAllExpenses(startDate,endDate,count)
+        .then( data =>{
+            dispact(loadDataSuccess(data));
+        })
+        .catch(error=>{
+            dispact(ajaxCallError(error));
+        })
+    }
+}
+
 
 export function loadDataForCount(startDate,endDate,count,extense) {
     return function(dispact){

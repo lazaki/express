@@ -17,6 +17,7 @@ export namespace Header {
     loadDataForCount:  (startDate,endDate,count,esxtense)=>void;
     loadDataForDate: (startDate,endDate)=>void;
     loadWorkOrderForVehicle: (startDate,endDate,count)=>void;
+    loadAllExpenses: (startDate,endDate,count)=>void;
   }
 
   export interface State {
@@ -130,7 +131,7 @@ export class Header extends React.Component<Header.Props, Header.State> {
           <PrimaryButton
             data-automation-id='test'
             text='Sve'
-            onClick={() => alert('Clicked')}
+            onClick={() => this.props.loadAllExpenses(this.state.periodOd,this.state.periodDo,this.state.konto)}
           />
           <DefaultButton
             data-automation-id='test'
