@@ -14,6 +14,7 @@ import {
   Spinner,
   SpinnerSize
 } from 'office-ui-fabric-react/lib/Spinner';
+import { Sum } from '../index';
 
 
 export namespace MainSection {
@@ -140,14 +141,16 @@ export class MainSection extends React.Component<MainSection.Props, MainSection.
           </div>
           break;
         }
-        element = <DetailsList
-        items={this.state.items.map(item => { return { ...item, Date: this.formatDate(new Date(item.Date)) } })}
-        columns={this.state.columns}
-        setKey='set'
-        layoutMode={DetailsListLayoutMode.fixedColumns}
-        selection={this._selection}
-        selectionPreservedOnEmptyClick={true}
-        onItemInvoked={(item) => alert(`Item invoked: ${item.Title}`)}/>
+        element = <div>
+        <DetailsList
+          items={this.state.items.map(item => { return { ...item, Date: this.formatDate(new Date(item.Date)) } })}
+          columns={this.state.columns}
+          setKey='set'
+          layoutMode={DetailsListLayoutMode.fixedColumns}
+          selection={this._selection}
+          selectionPreservedOnEmptyClick={true}
+          onItemInvoked={(item) => alert(`Item invoked: ${item.Title}`)}/>
+        </div>        
         break;
     }
       return <section className={style.searchTable}>

@@ -8,7 +8,7 @@ export enum ExpensesType {
     Ulje = 6,
     Stakla = 8,
     Deo = 9,
-    Osiguanje = 10,
+    Osiguranje = 10,
     Lizing = 11,
     Remont = 12,
     Eksterni = 13

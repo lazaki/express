@@ -4,7 +4,7 @@ import * as searchFormActions from '../../actions/searchFormActions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { Header, MainSection } from '../../components/SearchForm';
+import { Header, MainSection, Sum } from '../../components/SearchForm';
 
 export namespace Search {
   export interface Props extends RouteComponentProps<void> {

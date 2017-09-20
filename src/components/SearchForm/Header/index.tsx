@@ -9,6 +9,7 @@ import { Label } from "office-ui-fabric-react/lib/components/Label";
 import { autobind } from "@uifabric/utilities/lib";
 import { TagPicker } from 'office-ui-fabric-react/lib/components/pickers/TagPicker/TagPicker';
 import {ExpensesType} from '../../../constants/extensesTypes';
+import { Sum } from '../index';
 
 export namespace Header {
   export interface Props {
@@ -171,6 +172,7 @@ export class Header extends React.Component<Header.Props, Header.State> {
             onClick={() => alert('Clicked')}
           />
         </div>
+        <Sum data={this.props.data} konto = {this.state.konto} periodOd={this.state.periodOd} periodDo = {this.state.periodDo} filter={this.state.filter}></Sum>}
       </header>
     );
   }
