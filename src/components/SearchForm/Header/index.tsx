@@ -120,7 +120,7 @@ export class Header extends React.Component<Header.Props, Header.State> {
           onChange ={(items)=>{
             items[0]?
             this.setState({...this.state,konto:items[0].name}):
-            this.setState({...this.state,konto:""})
+            this.setState({...this.state,konto:"0"})
             }
             }
       />
@@ -172,7 +172,7 @@ export class Header extends React.Component<Header.Props, Header.State> {
             onClick={() => alert('Clicked')}
           />
         </div>
-        <Sum data={this.props.data} konto = {this.state.konto} periodOd={this.state.periodOd} periodDo = {this.state.periodDo} filter={this.state.filter}></Sum>}
+        <Sum data={this.props.data} konto = {this.state.konto} periodOd={this.state.periodOd} periodDo = {this.state.periodDo} filter={this.state.filter}></Sum>
       </header>
     );
   }
