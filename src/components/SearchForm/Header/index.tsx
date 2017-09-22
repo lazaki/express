@@ -8,17 +8,14 @@ import { DefaultButton } from "office-ui-fabric-react/lib/components/Button";
 import { Label } from "office-ui-fabric-react/lib/components/Label";
 import { autobind } from "@uifabric/utilities/lib";
 import { TagPicker } from 'office-ui-fabric-react/lib/components/pickers/TagPicker/TagPicker';
-import {ExpensesType} from '../../../constants/extensesTypes';
+import { ExpensesType } from '../../../constants/extensesTypes';
 import { Sum } from '../index';
 
 export namespace Header {
   export interface Props {
-    data:Array<any>;
-    counts:Array<any>;
-    loadDataForCount:  (startDate,endDate,count,esxtense)=>void;
-    loadDataForDate: (startDate,endDate)=>void;
-    loadWorkOrderForVehicle: (startDate,endDate,count)=>void;
-    loadAllExpenses: (startDate,endDate,count)=>void;
+    data: Array<any>;
+    counts: Array<any>;
+    loadSearchData: (startDate, endDate, count, esxtense) => void;
   }
 
   export interface State {
@@ -38,8 +35,8 @@ export class Header extends React.Component<Header.Props, Header.State> {
   constructor(props?: Header.Props, context?: any) {
     super(props, context);
     this.state = {
-      konto:"0",
-      periodOd: new Date(new Date().setMonth(new Date().getMonth()-1)),
+      konto: "0",
+      periodOd: new Date(new Date().setMonth(new Date().getMonth() - 1)),
       periodDo: new Date(),
       mesto: "SvaVozila",
       filter: "1",
@@ -48,10 +45,10 @@ export class Header extends React.Component<Header.Props, Header.State> {
   }
 
   componentWillReceiveProps(nextProps) {
-     _testTags = nextProps.counts.map(data=>{return { key: data.Id, name: data }})
+    _testTags = nextProps.counts.map(data => { return { key: data.Id, name: data } })
   }
 
-  
+
   private _onFilterChanged(filterText: string, tagList: { key: string, name: string }[]) {
     return filterText ? _testTags.filter(tag => tag.name.toLowerCase().indexOf(filterText.toLowerCase()) === 0).filter(item => !this._listContainsDocument(item, tagList)) : [];
   }
@@ -63,23 +60,37 @@ export class Header extends React.Component<Header.Props, Header.State> {
     return tagList.filter(compareTag => compareTag.key === tag.key).length > 0;
   }
 
-  render() {
+  private renderButtons() {
+    return Object.keys(ExpensesType).map((key, index, array) => {
+      return {
+        key: array[index],
+        text: ExpensesType[key]
+      }
+    }).filter((item) => {
+      return item.text.length > 1;
+    }
+      ).map(i => {
+            return <PrimaryButton checked={i.key === this.state.filter} text={i.text} onClick={() => (this.setState({ ...this.state, filter: i.key }),
+              this.props.loadSearchData(this.state.periodOd, this.state.periodDo, this.state.konto,i.key))} />
+      })
+  }
 
+  render() {
     return (
       <header className={style.searchHeader}>
         <div className={style.searchRow}>
-          <DatePicker formatDate={(date)=>date.toLocaleDateString()} placeholder='Period od' value = {this.state.periodOd} onSelectDate={(value)=> this.setState({...this.state,periodOd:value}) }/>
-          <DatePicker formatDate={(date)=>date.toLocaleDateString()} placeholder='Period od' value = {this.state.periodDo} onSelectDate={(value)=>this.setState({...this.state,periodDo:value}) }/>
+          <DatePicker formatDate={(date) => date.toLocaleDateString()} placeholder='Period od' value={this.state.periodOd} onSelectDate={(value) => this.setState({ ...this.state, periodOd: value })} />
+          <DatePicker formatDate={(date) => date.toLocaleDateString()} placeholder='Period od' value={this.state.periodDo} onSelectDate={(value) => this.setState({ ...this.state, periodDo: value })} />
           <PrimaryButton
             data-automation-id='test'
             text='Pretraži'
-            onClick={() =>{ alert("Rade, napravi servis!")}}
+            onClick={() => { alert("Rade, napravi servis!") }}
           />
           <ChoiceGroup
-            className = {style.choiseGroup}
-            onChange ={(ev,option)=>this.setState({...this.state,mesto:option.key})}
+            className={style.choiseGroup}
+            onChange={(ev, option) => this.setState({ ...this.state, mesto: option.key })}
             defaultSelectedKey='SvaVozila'
-            selectedKey = {this.state.mesto}
+            selectedKey={this.state.mesto}
             options={[
               {
                 key: 'SvaVozila',
@@ -108,22 +119,22 @@ export class Header extends React.Component<Header.Props, Header.State> {
           />
         </div>
         <div className={style.searchRow}>
-        <Label>Za konto</Label>
-        <TagPicker ref='tagPicker'
-          onResolveSuggestions={ this._onFilterChanged.bind(this) }
-          pickerSuggestionsProps={
-            {
-              suggestionsHeaderText: 'Konto broj',
-              noResultsFoundText: 'Nema zadatog konta'
+          <Label>Za konto</Label>
+          <TagPicker ref='tagPicker'
+            onResolveSuggestions={this._onFilterChanged.bind(this)}
+            pickerSuggestionsProps={
+              {
+                suggestionsHeaderText: 'Konto broj',
+                noResultsFoundText: 'Nema zadatog konta'
+              }
             }
-          }
-          onChange ={(items)=>{
-            items[0]?
-            this.setState({...this.state,konto:items[0].name}):
-            this.setState({...this.state,konto:"0"})
+            onChange={(items) => {
+              items[0] ?
+                this.setState({ ...this.state, konto: items[0].name }) :
+                this.setState({ ...this.state, konto: "0" })
             }
             }
-      />
+          />
           <PrimaryButton
             data-automation-id='test'
             text='Izlistaj sve intervencije za dati konto'
@@ -132,7 +143,7 @@ export class Header extends React.Component<Header.Props, Header.State> {
           <PrimaryButton
             data-automation-id='test'
             text='Sve'
-            onClick={() => this.props.loadAllExpenses(this.state.periodOd,this.state.periodDo,this.state.konto)}
+            onClick={() =>console.log("Loading")}
           />
           <DefaultButton
             data-automation-id='test'
@@ -147,32 +158,18 @@ export class Header extends React.Component<Header.Props, Header.State> {
         </div>
         <div className={style.searchRow}>
           <Label>Filtriraj</Label>
-        {Object.keys(ExpensesType).map((key,index,array)=>{
-          return {
-            key:array[index],
-            text:ExpensesType[key]
-          }
-          }).filter((item) =>{
-              return item.text.length>1;
-            }
-            ).map(i=>{
-              if(i.text==="Nalozi") {
-                return <PrimaryButton checked={i.key===this.state.filter} text = {i.text} onClick = {()=>(this.setState({...this.state,filter:i.key}),
-                this.props.loadWorkOrderForVehicle(this.state.periodOd,this.state.periodDo,this.state.konto))}/>
-              }
-              return <PrimaryButton checked={i.key===this.state.filter} text = {i.text} onClick = {()=>(this.setState({...this.state,filter:i.key}),
-              this.props.loadDataForCount(this.state.periodOd,this.state.periodDo,this.state.konto,i.key))}/>})}
+          {this.renderButtons()}
         </div>
         <div className={style.searchRow}>
-        <TextField
-            label='Traži delove, eksterne troškove i troškove Remonta:' onChanged={() => console.log()} underlined/>
+          <TextField
+            label='Traži delove, eksterne troškove i troškove Remonta:' onChanged={() => console.log()} underlined />
           <PrimaryButton
             data-automation-id='test'
             text='Tehničke karakteristike vozila'
             onClick={() => alert('Clicked')}
           />
         </div>
-        <Sum data={this.props.data} konto = {this.state.konto} periodOd={this.state.periodOd} periodDo = {this.state.periodDo} filter={this.state.filter}></Sum>
+        <Sum data={this.props.data} konto={this.state.konto} periodOd={this.state.periodOd} periodDo={this.state.periodDo} filter={this.state.filter}></Sum>
       </header>
     );
   }

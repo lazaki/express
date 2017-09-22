@@ -3,6 +3,8 @@ import * as style from './style.css';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
+import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
+import { PrimaryButton } from 'office-ui-fabric-react/lib/components/Button';
 
 export namespace Login {
   export interface Props extends RouteComponentProps<void> {
@@ -26,7 +28,8 @@ export class Login extends React.Component<Login.Props, Login.State> {
           </div>
           <div className={style.inputConatainer}>
             <TextField label='Korisničko ime' underlined />
-            <TextField label='Šifra' underlined />
+            <TextField type="password" label='Šifra' underlined />
+            <PrimaryButton onClick = {()=>console.log("Loging")} text="Uloguj se"/> 
           </div>
         </div>
       </div>

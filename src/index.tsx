@@ -14,19 +14,30 @@ const store = configureStore();
 store.dispatch(loadCounts());
 const history = createBrowserHistory();
 
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={props => (
+    true ? (
+      <Component {...props}/>
+    ) : (
+      <Redirect to={{
+        pathname: '/login',
+        state: { from: props.location }
+      }}/>
+    )
+  )}/>
+)
 
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
       <Switch>
         <Route
-          path="/app" component={Search}
-        />
-        <Route
           path="/login" component={Login}
         />
+        <PrivateRoute path="/" component={Search}/>
       </Switch>
     </Router>
   </Provider>,
   document.getElementById('root')
 );
+
