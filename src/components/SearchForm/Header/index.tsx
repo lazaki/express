@@ -10,6 +10,7 @@ import { autobind } from "@uifabric/utilities/lib";
 import { TagPicker } from 'office-ui-fabric-react/lib/components/pickers/TagPicker/TagPicker';
 import { ExpensesType } from '../../../constants/extensesTypes';
 import { Sum } from '../index';
+import { Route } from 'react-router-dom'
 
 export namespace Header {
   export interface Props {
@@ -70,8 +71,8 @@ export class Header extends React.Component<Header.Props, Header.State> {
       return item.text.length > 1;
     }
       ).map(i => {
-            return <PrimaryButton checked={i.key === this.state.filter} text={i.text} onClick={() => (this.setState({ ...this.state, filter: i.key }),
-              this.props.loadSearchData(this.state.periodOd, this.state.periodDo, this.state.konto,i.key))} />
+        return <PrimaryButton checked={i.key === this.state.filter} text={i.text} onClick={() => (this.setState({ ...this.state, filter: i.key }),
+          this.props.loadSearchData(this.state.periodOd, this.state.periodDo, this.state.konto, i.key))} />
       })
   }
 
@@ -143,18 +144,22 @@ export class Header extends React.Component<Header.Props, Header.State> {
           <PrimaryButton
             data-automation-id='test'
             text='Sve'
-            onClick={() =>console.log("Loading")}
+            onClick={() => console.log("Loading")}
           />
           <DefaultButton
             data-automation-id='test'
             text='Monitoring'
             onClick={() => alert('Clicked')}
           />
-          <DefaultButton
-            data-automation-id='test'
-            text='Tehničke karakteristike vozila'
-            onClick={() => alert('Clicked')}
-          />
+
+          <Route render={({ history }) => (
+            <DefaultButton
+              data-automation-id='test'
+              text='Tehničke karakteristike vozila'
+              onClick={() => { history.push("TechnicalCharacteristics/"+this.state.konto) }}
+            />
+          )} 
+        />
         </div>
         <div className={style.searchRow}>
           <Label>Filtriraj</Label>

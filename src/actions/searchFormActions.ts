@@ -27,7 +27,7 @@ export function loadSearchData(startDate, endDate, count, extense) {
                         dispact(ajaxCallError(error));
                     })
             case ExpensesType.Akumulatori:
-            return api.getBattery(startDate, endDate, count)
+                return api.getBattery(startDate, endDate, count)
                     .then(data => {
                         dispact(loadDataSuccess(data));
                     }).catch(error => {
@@ -110,8 +110,23 @@ export function loadDataSuccess(data) {
     return { type: types.LOAD_DATA_SUCCESS, data }
 }
 
+export function loadTechnicalCharacteristicsSuccess(characteristic) {
+    return { type: types.LOAD_TECHNICAL_CHARACTERISTIC_SUCCESS, characteristic }
+}
+
 export function loadCountsSuccess(counts) {
     return { type: types.LOAD_COUNTS_SUCCESS, counts }
+}
+
+export function loadTechnicalCharacteristics(count: number) {
+    return function (dispact) {
+        return api.getTechnicalCharacteristics(count)
+            .then(characteristic => {
+                dispact(loadTechnicalCharacteristicsSuccess(characteristic));
+            }).catch(error => {
+                dispact(ajaxCallError(error));
+            })
+    }
 }
 
 

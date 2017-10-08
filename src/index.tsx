@@ -7,24 +7,30 @@ import configureStore from './store/configureStore';
 import { loadCounts } from './actions/searchFormActions';
 import { Search } from './containers/Search';
 import { Login } from './containers/Login';
-import 'react-toastify/dist/ReactToastify.min.css' 
+import { TechnicalCharacteristicsPage } from './containers/TechnicalCharacteristicsPage';
+import 'react-toastify/dist/ReactToastify.min.css'
 
 
 const store = configureStore();
 store.dispatch(loadCounts());
 const history = createBrowserHistory();
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
+const PrivateRoute = ({ ...rest }) => (
   <Route {...rest} render={props => (
     true ? (
-      <Component {...props}/>
+      <Router history={history}>
+        <div>
+          <Route path="/" exact component={Search}/>
+          <Route path="/TechnicalCharacteristics/:conto" component={TechnicalCharacteristicsPage}/>
+        </div>
+      </Router>
     ) : (
-      <Redirect to={{
-        pathname: '/login',
-        state: { from: props.location }
-      }}/>
-    )
-  )}/>
+        <Redirect to={{
+          pathname: '/login',
+          state: { from: props.location }
+        }} />
+      )
+  )} />
 )
 
 ReactDOM.render(
@@ -34,7 +40,7 @@ ReactDOM.render(
         <Route
           path="/login" component={Login}
         />
-        <PrivateRoute path="/" component={Search}/>
+        <PrivateRoute path="/" />
       </Switch>
     </Router>
   </Provider>,

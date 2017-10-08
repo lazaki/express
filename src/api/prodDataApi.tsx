@@ -100,6 +100,13 @@ class DataApi {
     })
   }
 
+  static getTechnicalCharacteristics(count) {
+    return fetch(`http://service.novogodisnjiukrasi.rs/api/vehicle/GetDetails/${count}`).then((response) => {
+      return response.json();
+    })
+  }
+
+
 }
 
 export default DataApi;
