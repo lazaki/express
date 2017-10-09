@@ -153,15 +153,12 @@ export class Header extends React.Component<Header.Props, Header.State> {
             text='Monitoring'
             onClick={() => alert('Clicked')}
           />
-
-          <Route render={({ history }) => (
+          {/* <a target="_blank" href={`${location.origin}/TechnicalCharacteristics/${this.state.konto}`}>Tehnicke karakteristike</a> */}
             <DefaultButton
               data-automation-id='test'
               text='Tehničke karakteristike vozila'
-              onClick={() => { history.push("TechnicalCharacteristics/"+this.state.konto) }}
+              onClick={() => { window.open(`${location.origin}/TechnicalCharacteristics/${this.state.konto}`, '_blank');}}
             />
-          )} 
-        />
         </div>
         <div className={style.searchRow}>
           <Label>Filtriraj</Label>
