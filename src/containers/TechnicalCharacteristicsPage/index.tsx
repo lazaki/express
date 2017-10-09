@@ -40,15 +40,8 @@ export class TechnicalCharacteristicsPage extends React.Component<TechnicalChara
         </div>
        :
         <div className = {style.characteristicContainer}>
+        <h1>Tehničke karakteristike vozila</h1>
             <TechnicalCharacteristics loadTechnicalCharacteristics={this.props.loadTechnicalCharacteristics} characteristic={this.props.characteristic} konto = {this.props.match.params.conto}/>
-            <Route render={({ history }) => (
-            <DefaultButton
-              data-automation-id='test'
-              text='Nazad na pretragu'
-              onClick={() => { history.push("/") }}
-            />
-          )} 
-        />
         </div>
           )
   }
