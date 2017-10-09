@@ -42,6 +42,10 @@ export class Sum extends React.Component<Sum.Props, Sum.State> {
     }
   }
 
+  private numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   componentWillReceiveProps(nextProps) {
     let sum =0;
     nextProps.data&&nextProps.data.map(d=>sum+=d.Price);
@@ -89,7 +93,7 @@ export class Sum extends React.Component<Sum.Props, Sum.State> {
 
   render() {
       return <div className={style.message}>
-        Ukupni troškovi <span>{this.state.filter.toLocaleLowerCase()}</span> {this.props.konto!=="0"?<span>za konto <span>{this.props.konto}</span></span>:<span>za sve kontoe</span>} u periodu od <span>{this.props.periodOd.toLocaleDateString()}</span> do <span>{this.props.periodDo.toLocaleDateString()}</span> u <span>{this.checkPlace(this.props.place)}</span> iznose <span>{this.state.sum.toFixed(2)}</span> dinara.
+        Ukupni troškovi <span>{this.state.filter.toLocaleLowerCase()}</span> {this.props.konto!=="0"?<span>za konto <span>{this.props.konto}</span></span>:<span>za sve kontoe</span>} u periodu od <span>{this.props.periodOd.toLocaleDateString()}</span> do <span>{this.props.periodDo.toLocaleDateString()}</span> u <span>{this.checkPlace(this.props.place)}</span> iznose <span>{this.numberWithCommas(this.state.sum.toFixed(2))}</span> dinara.
       </div>
   }
 }

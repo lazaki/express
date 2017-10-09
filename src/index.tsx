@@ -14,8 +14,9 @@ import 'react-toastify/dist/ReactToastify.min.css'
 const store = configureStore();
 store.dispatch(loadCounts());
 const history = createBrowserHistory();
+const state = store.getState()
 
-const PrivateRoute = ({ ...rest }) => (
+const PrivateRoute = (state,{ ...rest }) => (
   <Route {...rest} render={props => (
     true ? (
       <Router history={history}>
@@ -40,7 +41,7 @@ ReactDOM.render(
         <Route
           path="/login" component={Login}
         />
-        <PrivateRoute path="/" />
+        <PrivateRoute path="/" state={state}/>
       </Switch>
     </Router>
   </Provider>,

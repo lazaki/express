@@ -10,3 +10,7 @@ export const LOAD_DATA = 'LOAD_DATA_FOR_COUNT';
 export const LOAD_DATA_SUCCESS = 'LOAD_DATA_SUCCESS';
 
 export const FILTER_DATA_BY_PLACE = 'FILTER_DATA_BY_PLACE';
+
+export const LOGIN = 'LOGIN';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAIL = 'LOGIN_FAIL';

@@ -10,10 +10,6 @@ import { toast } from 'react-toastify';
 require('react-toastify/dist/ReactToastify.min.css');
 
 
-
-
-
-
 export function loadSearchData(startDate, endDate, count, extense) {
     return function (dispact) {
         dispact(beginAjaxCall());

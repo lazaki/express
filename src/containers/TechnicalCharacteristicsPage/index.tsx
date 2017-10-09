@@ -28,15 +28,8 @@ export class TechnicalCharacteristicsPage extends React.Component<TechnicalChara
   render() {
     return (
       this.props.match.params.conto == 0 ?
-        <div className = {style.characteristicContainer}>Niste izabrali konto
-          <Route render={({ history }) => (
-            <DefaultButton
-              data-automation-id='test'
-              text='Nazad na pretragu'
-              onClick={() => { history.push("/") }}
-            />
-          )} 
-        />
+        <div className = {style.characteristicContainer}>
+          <h3>Niste izabrali konto</h3>
         </div>
        :
         <div className = {style.characteristicContainer}>
