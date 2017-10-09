@@ -17,7 +17,6 @@ export namespace TechnicalCharacteristics {
 
 
 export class TechnicalCharacteristics extends React.Component<TechnicalCharacteristics.Props, TechnicalCharacteristics.State> {
-  private _selection: Selection;
   constructor(props: TechnicalCharacteristics.Props) {
     super(props);
     this.props.loadTechnicalCharacteristics(props.konto);
@@ -42,8 +41,6 @@ export class TechnicalCharacteristics extends React.Component<TechnicalCharacter
           <div><span>Tip vozila</span><p>{this.props.characteristic.Type}</p></div>
           <div><span>Registarska oznaka</span><p>{this.props.characteristic.RegNumber}</p></div>
           <div><span>Godina</span><p>{this.props.characteristic.Year}</p></div>
-          <div><span>Primarni vozač</span><p>{this.props.characteristic.DriverPrimary}</p></div>
-          <div><span>Drugi vozač</span><p>{this.props.characteristic.DriverSecond}</p></div>
           <div><span>Tip motora</span><p>{this.props.characteristic.EngineType}</p></div>
           <div><span>Broj motora</span><p>{this.props.characteristic.EngineNumber}</p></div>
           <div><span>Broj šasije</span><p>{this.props.characteristic.VIN}</p></div>

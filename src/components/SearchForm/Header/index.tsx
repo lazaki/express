@@ -11,12 +11,15 @@ import { TagPicker } from 'office-ui-fabric-react/lib/components/pickers/TagPick
 import { ExpensesType } from '../../../constants/extensesTypes';
 import { Sum } from '../index';
 import { Route } from 'react-router-dom'
+import { Places } from '../../../constants/places';
 
 export namespace Header {
   export interface Props {
     data: Array<any>;
     counts: Array<any>;
+    place:"BC"|"BT"|"UE";
     loadSearchData: (startDate, endDate, count, esxtense) => void;
+    filterDataByPlace:(place:string)=>void;
   }
 
   export interface State {
@@ -33,8 +36,8 @@ let _testTags = [];
 
 export class Header extends React.Component<Header.Props, Header.State> {
 
-  constructor(props?: Header.Props, context?: any) {
-    super(props, context);
+  constructor(props: Header.Props) {
+    super(props);
     this.state = {
       konto: "0",
       periodOd: new Date(new Date().setMonth(new Date().getMonth() - 1)),
@@ -77,6 +80,7 @@ export class Header extends React.Component<Header.Props, Header.State> {
   }
 
   render() {
+    console.log(this.props.place);
     return (
       <header className={style.searchHeader}>
         <div className={style.searchRow}>
@@ -89,29 +93,27 @@ export class Header extends React.Component<Header.Props, Header.State> {
           />
           <ChoiceGroup
             className={style.choiseGroup}
-            onChange={(ev, option) => this.setState({ ...this.state, mesto: option.key })}
-            defaultSelectedKey='SvaVozila'
-            selectedKey={this.state.mesto}
+            onChange={(ev, option) => this.props.filterDataByPlace(option.key)}
+            selectedKey={this.props.place}
             options={[
               {
-                key: 'SvaVozila',
-                text: 'Sva vozila'
+                key: 'SV',
+                text: 'Sva mesta'
               },
               {
-                key: 'Becej',
+                key: 'BC',
                 text: 'Bečej ',
               },
               {
-                key: 'BackaTopola',
+                key: 'BT',
                 text: 'Bačka Topola',
               },
               {
-                key: 'Uzice',
+                key: 'UE',
                 text: 'Užice ',
               }
             ]}
             label='Mesto vozila'
-            required={true}
           />
           <PrimaryButton
             data-automation-id='test'
@@ -174,7 +176,7 @@ export class Header extends React.Component<Header.Props, Header.State> {
             onClick={() => alert('Clicked')}
           />
         </div>
-        <Sum data={this.props.data} konto={this.state.konto} periodOd={this.state.periodOd} periodDo={this.state.periodDo} filter={this.state.filter}></Sum>
+        <Sum place={this.props.place} data={this.props.data} konto={this.state.konto} periodOd={this.state.periodOd} periodDo={this.state.periodDo} filter={this.state.filter}></Sum>
       </header>
     );
   }

@@ -106,6 +106,10 @@ export function loadCounts() {
     }
 }
 
+export function filterDataByPlace(place) {
+    return {type: types.FILTER_DATA_BY_PLACE, place}
+}
+
 export function loadDataSuccess(data) {
     return { type: types.LOAD_DATA_SUCCESS, data }
 }

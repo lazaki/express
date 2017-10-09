@@ -1,4 +1,3 @@
-import { handleActions } from 'redux-actions';
 import * as types from '../actions/actionTypes';
 
 export default function searchReducer(state=[], action) {
