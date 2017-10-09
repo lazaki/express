@@ -15,6 +15,7 @@ import {
   SpinnerSize
 } from 'office-ui-fabric-react/lib/Spinner';
 import { Sum } from '../index';
+import { autobind } from 'office-ui-fabric-react/lib/Utilities';
 
 
 export namespace MainSection {
@@ -104,7 +105,8 @@ export class MainSection extends React.Component<MainSection.Props, MainSection.
           fieldName: key,
           minWidth: 100,
           isResizable: true,
-          className: style.descriptionTableCell
+          className: style.descriptionTableCell,
+          onColumnClick: this.onColumnClick.bind(this)
         }
       }
       return {
@@ -113,7 +115,8 @@ export class MainSection extends React.Component<MainSection.Props, MainSection.
         fieldName: key,
         minWidth: 100,
         isResizable: true,      
-        className: style.tableCell
+        className: style.tableCell,
+        onColumnClick: this.onColumnClick.bind(this)
       }
     }).filter(column => { if(column.key !== "Id" && column.key !== "EndDate") {
       return true;
@@ -157,4 +160,53 @@ export class MainSection extends React.Component<MainSection.Props, MainSection.
         {element}
       </section>
   }
+
+  @autobind
+  private onColumnClick(ev: React.MouseEvent<HTMLElement>, column: IColumn) {
+    const { columns, items } = this.state;
+    let newItems: any[] = items.slice();
+    let newColumns: IColumn[] = columns.slice();
+    let currColumn: IColumn = newColumns.filter((currCol: IColumn, idx: number) => {
+      return column.key === currCol.key;
+    })[0];
+    newColumns.forEach((newCol: IColumn) => {
+      if (newCol === currColumn) {
+        currColumn.isSortedDescending = !currColumn.isSortedDescending;
+        currColumn.isSorted = true;
+      } else {
+        newCol.isSorted = false;
+        newCol.isSortedDescending = true;
+      }
+    });
+    newItems = this.sortItems(newItems, currColumn.fieldName, currColumn.isSortedDescending);
+    this.setState({
+      columns: newColumns,
+      items: newItems
+    });
+  }
+
+  @autobind
+  private sortItems(items: any, sortBy: string, descending = false): any[] {
+    if (descending) {
+      return items.sort((a: any, b: any) => {
+        if (a[sortBy] < b[sortBy]) {
+          return 1;
+        }
+        if (a[sortBy] > b[sortBy]) {
+          return -1;
+        }
+        return 0;
+      });
+    } else {
+      return items.sort((a: any, b: any) => {
+        if (a[sortBy] < b[sortBy]) {
+          return -1;
+        }
+        if (a[sortBy] > b[sortBy]) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+}
 }
