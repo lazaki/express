@@ -28,7 +28,7 @@ class DataApi {
 
   static login(user) {
       return new Promise((resolve, reject) => {
-        if(user.username==="lazar" && user.password ==="1234"){
+        if(user.username==="pretraga" && user.password ==="pretr@ga1234."){
           setTimeout(() => {
             resolve(Object.assign({}, {logged:true}));
           }, delay);
