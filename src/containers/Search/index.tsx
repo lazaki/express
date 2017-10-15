@@ -26,8 +26,11 @@ export namespace Search {
 
 @connect(mapStateToProps, mapDispatchToProps)
 export class Search extends React.Component<Search.Props, Search.State> {
+  constructor(props) {
+    super(props);
+    this.props.loadCounts();
+  }
   render() {
-    ()=>this.props.loadCounts()
     return (
       <div className={style.searchContainer}>
         <Header logOut={this.props.logOut} place = {this.props.place} counts= {this.props.counts} data = {this.props.data} filterDataByPlace={this.props.filterDataByPlace} loadSearchData = {this.props.loadSearchData} />
