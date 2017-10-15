@@ -85,6 +85,14 @@ export function loadSearchData(startDate, endDate, count, extense) {
                     }).catch(error => {
                         dispact(ajaxCallError(error));
                     })
+            case ExpensesType.Sati:
+                    return api.getHoursForVehicle(startDate, endDate, count)
+                        .then(data => {
+                            console.log(data);
+                            dispact(loadDataSuccess(data));
+                        }).catch(error => {
+                            dispact(ajaxCallError(error));
+                        })
 
         }
 

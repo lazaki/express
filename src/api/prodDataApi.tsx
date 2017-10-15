@@ -106,6 +106,12 @@ class DataApi {
     })
   }
 
+  static getHoursForVehicle(startDate,endDate,count) {
+    return fetch(`http://service.novogodisnjiukrasi.rs/api/hours/GetHoursForVehicle/${formatDate(startDate)}/${formatDate(endDate)}/${count}`).then((response) => {
+      return response.json();
+    })
+  }
+
 
 }
 

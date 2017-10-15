@@ -85,6 +85,8 @@ export class Sum extends React.Component<Sum.Props, Sum.State> {
         return "remonta"
       case "Eksterni":
         return "ekterni"
+      case "Sati":
+        return "za sate"
     }
   }
 

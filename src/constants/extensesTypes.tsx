@@ -8,5 +8,6 @@ export enum ExpensesType {
     Deo = 9,
     Osiguranje = 10,
     Remont = 12,
-    Eksterni = 13
+    Eksterni = 13,
+    Sati = 14
 }

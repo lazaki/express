@@ -5,7 +5,8 @@ import {
   DetailsListLayoutMode,
   IDetailsHeaderProps,
   Selection,
-  IColumn
+  IColumn,
+  CheckboxVisibility
 } from 'office-ui-fabric-react/lib/DetailsList';
 import { IRenderFunction } from "@uifabric/utilities/lib";
 import { ITooltipHostProps } from "office-ui-fabric-react/lib/Tooltip";
@@ -76,6 +77,10 @@ export class MainSection extends React.Component<MainSection.Props, MainSection.
         return "Mesto"
       case "Time":
         return "Vreme"
+      case "PriceHour":
+        return "Cena po satu"
+      case "AllHours":
+        return "Ukupno sati"
       default:
         return key
     }
@@ -152,6 +157,7 @@ export class MainSection extends React.Component<MainSection.Props, MainSection.
           layoutMode={DetailsListLayoutMode.fixedColumns}
           selection={this._selection}
           selectionPreservedOnEmptyClick={true}
+          checkboxVisibility={CheckboxVisibility.hidden}
           onItemInvoked={(item) => alert(`Item invoked: ${item.Title}`)}/>
         </div>        
         break;
