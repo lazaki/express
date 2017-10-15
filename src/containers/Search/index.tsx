@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as style from './style.css';
 import * as searchFormActions from '../../actions/searchFormActions';
+import * as loginActions from '../../actions/loginActions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -14,6 +15,8 @@ export namespace Search {
     place:"BC"|"BT"|"UE",
     loadSearchData: (startDate,endDate)=>void;
     filterDataByPlace: (place:string)=>void;
+    loadCounts:()=>void;
+    logOut:()=>void;
   }
 
   export interface State {
@@ -23,11 +26,11 @@ export namespace Search {
 
 @connect(mapStateToProps, mapDispatchToProps)
 export class Search extends React.Component<Search.Props, Search.State> {
-
   render() {
+    ()=>this.props.loadCounts()
     return (
       <div className={style.searchContainer}>
-        <Header place = {this.props.place} counts= {this.props.counts} data = {this.props.data} filterDataByPlace={this.props.filterDataByPlace} loadSearchData = {this.props.loadSearchData} />
+        <Header logOut={this.props.logOut} place = {this.props.place} counts= {this.props.counts} data = {this.props.data} filterDataByPlace={this.props.filterDataByPlace} loadSearchData = {this.props.loadSearchData} />
         <MainSection ajaxStatus = {this.props.ajaxStatus} data = {this.props.data}/>
       </div>
     );
@@ -50,6 +53,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    logOut:()=>dispatch(loginActions.logout()),
+    loadCounts:()=>dispatch(searchFormActions.loadCounts()),
     filterDataByPlace:(place)=>dispatch(searchFormActions.filterDataByPlace(place)),
     loadSearchData:(startDate,endDate,count,criteria)=> dispatch(searchFormActions.loadSearchData(startDate,endDate,count,criteria))
   };

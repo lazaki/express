@@ -59,7 +59,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {   
-    login:(user)=>dispatch(loginActions.loginToSystem(user))
-    
+    login:(user)=>dispatch(loginActions.login(user))
   };
 }

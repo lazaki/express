@@ -27,21 +27,41 @@ function randomDate(start, end) {
 class DataApi {
 
   static login(user) {
-    if (user.username === "lazar" && user.password === "1234") {
-      console.log(user);
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve(Object.assign({}, {loggedIn:true,accessToken:"asdasdasdasdq"}));
-        }, delay);
-      });
-    }else {
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          reject(Object.assign({}, {loggedIn:false,accessToken:""}));
-        }, delay);
+        if(user.username==="lazar" && user.password ==="1234"){
+          setTimeout(() => {
+            resolve(Object.assign({}, {logged:true}));
+          }, delay);
+        }else {
+          setTimeout(() => {
+            reject(Object.assign({}, {logged:false}));
+          }, delay);
+        }
       });
     }
-  }
+
+    static logout() {
+      return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(Object.assign({}, {logged:false}));
+          }, delay);
+      });
+    }
+
+    static checkUserIsLogedIn() {
+      const loggedIn = localStorage.getItem("logged");
+      return new Promise((resolve, reject) => {
+        if(loggedIn==="true"){
+          setTimeout(() => {
+            resolve(Object.assign({}, {logged:loggedIn}));
+          }, 0);
+        }else {
+          setTimeout(() => {
+            reject(Object.assign({}, {logged:false}));
+          }, 0);
+        }
+      });
+    }
 
   static getDataForDate(startDate, endDate) {
     var start = new Date(startDate).getTime();

@@ -4,7 +4,7 @@ import counts from './countReducer';
 import ajaxStatus from './ajaxStatusReducer';
 import technicalCharacteristic from './technicalCharacteristicReducer';
 import place from './searchFormFilterReducer';
-import loginReducer from './loginReducer';
+import login from './loginReducer';
 
 const rootReducer = combineReducers({
   data,
@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   ajaxStatus,
   technicalCharacteristic,
   place,
-  loginReducer
+  login
 });
 
 export default rootReducer;

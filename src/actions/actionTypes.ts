@@ -12,5 +12,12 @@ export const LOAD_DATA_SUCCESS = 'LOAD_DATA_SUCCESS';
 export const FILTER_DATA_BY_PLACE = 'FILTER_DATA_BY_PLACE';
 
 export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const LOGOUT_FAIL = 'LOGOUT_FAIL';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const CHECKING_IS_USER_LOGED_IN = "CHECKING_IS_USER_LOGED_IN";
+export const USER_IS_LOGGED_IN = "USER_IS_LOGGED_IN";
+export const USER_IS_NOT_LOGGED_IN = "USER_IS_NOT_LOGGED_IN";
+

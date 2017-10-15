@@ -20,6 +20,7 @@ export namespace Header {
     place:"BC"|"BT"|"UE";
     loadSearchData: (startDate, endDate, count, esxtense) => void;
     filterDataByPlace:(place:string)=>void;
+    logOut:()=>void;
   }
 
   export interface State {
@@ -82,7 +83,10 @@ export class Header extends React.Component<Header.Props, Header.State> {
   render() {
     return (
       <header className={style.searchHeader}>
-        <img className={style.searchHeaderImage} src="http://vicont.rs/images/vicont_vektor_logo.png" alt="Vicont"/>
+        <div className={style.searchControlRow}>
+          <img className={style.searchHeaderImage} src="http://vicont.rs/images/vicont_vektor_logo.png" alt="Vicont"/>
+          <DefaultButton onClick={()=>this.props.logOut()}>Izloguj se</DefaultButton>
+        </div>
         <div className={style.searchRow}>
           <DatePicker formatDate={(date) => date.toLocaleDateString()} placeholder='Period od' value={this.state.periodOd} onSelectDate={(value) => this.setState({ ...this.state, periodOd: value })} />
           <DatePicker formatDate={(date) => date.toLocaleDateString()} placeholder='Period od' value={this.state.periodDo} onSelectDate={(value) => this.setState({ ...this.state, periodDo: value })} />
