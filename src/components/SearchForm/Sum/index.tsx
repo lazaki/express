@@ -94,8 +94,13 @@ export class Sum extends React.Component<Sum.Props, Sum.State> {
 
 
   render() {
-      return <div className={style.message}>
-        Ukupni troškovi <span>{this.state.filter.toLocaleLowerCase()}</span> {this.props.konto!=="0"?<span>za konto <span>{this.props.konto}</span></span>:<span>za sve kontoe</span>} u periodu od <span>{this.props.periodOd.toLocaleDateString()}</span> do <span>{this.props.periodDo.toLocaleDateString()}</span> u <span>{this.checkPlace(this.props.place)}</span> iznose <span>{this.numberWithCommas(this.state.sum.toFixed(2))}</span> dinara.
-      </div>
+      return <div>
+          {this.props.filter!=="0"?
+            <div className={style.message}>
+              Ukupni troškovi <span>{this.state.filter.toLocaleLowerCase()}</span> {this.props.konto!=="0"?<span>za konto <span>{this.props.konto}</span></span>:<span>za sve kontoe</span>} u periodu od <span>{this.props.periodOd.toLocaleDateString()}</span> do <span>{this.props.periodDo.toLocaleDateString()}</span> {this.props.konto==="0"?<span>u {this.checkPlace(this.props.place)}</span>:""} iznose <span>{this.numberWithCommas(this.state.sum.toFixed(2))}</span> dinara.
+            </div>:
+            <div className={style.message}>Troškovi svih intervencija za konto <span>{this.props.konto}</span> u periodu od <span>{this.props.periodOd.toLocaleDateString()}</span> do <span>{this.props.periodDo.toLocaleDateString()}</span> iznose <span>{this.numberWithCommas(this.state.sum.toFixed(2))}</span></div>
+          }
+        </div>
   }
 }

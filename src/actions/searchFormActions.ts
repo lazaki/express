@@ -86,13 +86,21 @@ export function loadSearchData(startDate, endDate, count, extense) {
                         dispact(ajaxCallError(error));
                     })
             case ExpensesType.Sati:
-                    return api.getHoursForVehicle(startDate, endDate, count)
-                        .then(data => {
-                            console.log(data);
-                            dispact(loadDataSuccess(data));
-                        }).catch(error => {
-                            dispact(ajaxCallError(error));
-                        })
+                return api.getHoursForVehicle(startDate, endDate, count)
+                    .then(data => {
+                        console.log(data);
+                        dispact(loadDataSuccess(data));
+                    }).catch(error => {
+                        dispact(ajaxCallError(error));
+                    })
+            case 111:
+                return api.getAllExpenses(startDate, endDate, count)
+                    .then(data => {
+                        console.log(data);
+                        dispact(loadDataSuccess(data));
+                    }).catch(error => {
+                        dispact(ajaxCallError(error));
+                    })
 
         }
 
@@ -111,7 +119,7 @@ export function loadCounts() {
 }
 
 export function filterDataByPlace(place) {
-    return {type: types.FILTER_DATA_BY_PLACE, place}
+    return { type: types.FILTER_DATA_BY_PLACE, place }
 }
 
 export function loadDataSuccess(data) {

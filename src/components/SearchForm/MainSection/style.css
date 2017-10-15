@@ -3,21 +3,21 @@ body {
 }
 
 .searchTable {
-    margin-top: 290px;
+    margin-top: 325px;
     overflow: auto;
     height: calc(100vh - 250px);
 }
 
 #root > div > section > div > div > div > div:nth-child(1) > div {
     position: fixed!important;
-    top: 265px!important;
+    top: 300px!important;
     width: 100vw!important;
     z-index: 99!important;
 }
 
 div[class^="ms-FocusZone ms-DetailsHeader"]  {
     position: fixed!important;
-    top: 255px!important;    
+    top: 290px!important;    
     width: 100vw!important;
     z-index: 99!important;
 }

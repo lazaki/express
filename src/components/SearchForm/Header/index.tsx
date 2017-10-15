@@ -44,7 +44,7 @@ export class Header extends React.Component<Header.Props, Header.State> {
       periodDo: new Date(),
       mesto: "SvaVozila",
       filter: "1",
-      pretraga: "",
+      pretraga: ""
     }
   }
 
@@ -92,6 +92,7 @@ export class Header extends React.Component<Header.Props, Header.State> {
             onClick={() => { alert("Rade, napravi servis!") }}
           />
           <ChoiceGroup
+            disabled={this.state.konto!=="0"}
             className={style.choiseGroup}
             onChange={(ev, option) => this.props.filterDataByPlace(option.key)}
             selectedKey={this.props.place}
@@ -133,7 +134,7 @@ export class Header extends React.Component<Header.Props, Header.State> {
             }
             onChange={(items) => {
               items[0] ?
-                this.setState({ ...this.state, konto: items[0].name }) :
+                (this.setState({ ...this.state, konto: items[0].name }),this.props.filterDataByPlace("SV")) :
                 this.setState({ ...this.state, konto: "0" })
             }
             }
@@ -141,12 +142,7 @@ export class Header extends React.Component<Header.Props, Header.State> {
           <PrimaryButton
             data-automation-id='test'
             text='Izlistaj sve intervencije za dati konto'
-            onClick={() => alert("Rade, napravi servis!")}
-          />
-          <PrimaryButton
-            data-automation-id='test'
-            text='Sve'
-            onClick={() => console.log("Loading")}
+            onClick={() => Number(this.state.konto)===0?alert("Niste odabrali konto"):(this.props.loadSearchData(this.state.periodOd, this.state.periodDo, this.state.konto, 111),this.setState({filter:"0"}))}
           />
           <DefaultButton
             data-automation-id='test'
