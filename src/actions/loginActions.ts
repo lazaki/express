@@ -9,7 +9,7 @@ export function login(user) {
             localStorage.setItem('logged', 'true');
             dispact({type: types.LOGIN_SUCCESS});
         }).catch(loginData => {
-            dispact({type: types.LOGIN_FAIL});
+            dispact({type: types.LOGIN_FAIL,loginData});
         })
     }
 }

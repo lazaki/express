@@ -1,7 +1,7 @@
 import * as types from '../actions/actionTypes';
 
 
-export default function loginReducer(state={ logged:false }, action) {
+export default function loginReducer(state={ logged:false, error: "" }, action) {
   console.log(action);
   switch(action.type){
     case types.LOGIN_SUCCESS:
@@ -12,6 +12,8 @@ export default function loginReducer(state={ logged:false }, action) {
       return {...state, logged:action.loginData.logged};
     case types.LOGOUT_SUCCESS:
       return {...state, logged:action.loginData.logged};
+    case types.LOGIN_FAIL:
+      return {...state, error:action.loginData.error};
     case types.LOGIN_SUCCESS:
       return {...state, logged:false};
     default:

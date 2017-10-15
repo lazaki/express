@@ -28,13 +28,19 @@ class DataApi {
 
   static login(user) {
       return new Promise((resolve, reject) => {
-        if(user.username==="pretraga" && user.password ==="pretr@ga1234."){
-          setTimeout(() => {
-            resolve(Object.assign({}, {logged:true}));
-          }, delay);
+        if(user.username==="pretraga"){
+          if(user.password ==="pretr@ga1234."){
+            setTimeout(() => {
+              resolve(Object.assign({}, {logged:true}));
+            }, delay);
+          }else {
+            setTimeout(() => {
+              reject(Object.assign({}, {error:"Password"}));
+            }, delay);
+          }
         }else {
           setTimeout(() => {
-            reject(Object.assign({}, {logged:false}));
+            reject(Object.assign({}, {error:"UserName"}));
           }, delay);
         }
       });

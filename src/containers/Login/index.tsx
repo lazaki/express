@@ -10,6 +10,7 @@ import * as loginActions from '../../actions/loginACtions';
 export namespace Login {
   export interface Props extends RouteComponentProps<void> {
     login:(user)=>void;
+    error: string;
   }
 
   export interface State {
@@ -41,8 +42,8 @@ export class Login extends React.Component<Login.Props, Login.State> {
             <h2 className="ms-font-xl ms-fontWeight-light">Logovanje</h2>
           </div>
           <div className={style.inputConatainer}>
-            <TextField value={this.state.user.username} onChanged={(value)=>this.setState({...this.state,user:{...this.state.user,username: value}})} label='Korisničko ime' underlined />
-            <TextField value={this.state.user.password}  onChanged={(value)=>this.setState({...this.state,user:{...this.state.user,password: value}})} type="password" label='Šifra' underlined />
+            <TextField errorMessage={this.props.error==="UserName"&&"Pogresno korisničko ime"} value={this.state.user.username} onChanged={(value)=>this.setState({...this.state,user:{...this.state.user,username: value}})} label='Korisničko ime' underlined />
+            <TextField errorMessage={this.props.error==="Password"&&"Pogresna šifra"} value={this.state.user.password}  onChanged={(value)=>this.setState({...this.state,user:{...this.state.user,password: value}})} type="password" label='Šifra' underlined />
             <PrimaryButton onClick = {()=>this.props.login(this.state.user)} text="Uloguj se"/> 
           </div>
         </div>
@@ -52,8 +53,9 @@ export class Login extends React.Component<Login.Props, Login.State> {
 }
 
 function mapStateToProps(state) {
+  console.log(state);
   return {
-    
+    error: state.login.error
   };
 }
 
