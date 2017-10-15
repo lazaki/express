@@ -10,7 +10,7 @@ import { Header, MainSection, Sum } from '../../components/SearchForm';
 export namespace Search {
   export interface Props extends RouteComponentProps<void> {
     data:Array<any>;
-    counts:Array<any>;
+    counts:Array<string>;
     ajaxStatus: any;
     place:"BC"|"BT"|"UE",
     loadSearchData: (startDate,endDate)=>void;
