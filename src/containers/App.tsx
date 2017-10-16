@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as style from './style.css';
 import { connect } from 'react-redux';
-import { RouteComponentProps, Route, Router, Redirect } from 'react-router';
+import { RouteComponentProps, Route, Router, Redirect, Switch } from 'react-router';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
 import { PrimaryButton } from 'office-ui-fabric-react/lib/components/Button';
@@ -15,7 +15,8 @@ export namespace App {
         state: {};
         path: string;
         logged?: boolean;
-        history:any;
+        history: any;
+        location?: any;
     }
 }
 
@@ -27,32 +28,31 @@ export class App extends React.Component<App.Props, {}> {
 
     render() {
         return (
-            this.props.logged ? (
-                <Router history={this.props.history}>
+            <Router history={this.props.history}>
+                {this.props.logged ? (
+
                     <div>
-                        <Redirect to="/" />
-                        <Route path="/" exact component={Search} />
-                        <Route path="/TechnicalCharacteristics/:conto" component={TechnicalCharacteristicsPage} />
+                            <Route exact path="/" component={Search} />
+                            <Route path="/TechnicalCharacteristics/:conto" component={TechnicalCharacteristicsPage} />
                     </div>
-                </Router>
-            ) : (
-                    <div>
-                        <Redirect to="/Login" />
-                        <Route path="/Login" component={Login} />
-                    </div>
-                )
+                ) : (
+                        <div>
+                            <Route exact path="/" component={Login} />
+                        </div>
+                    )}
+            </Router>
         );
     }
 }
 
 function mapStateToProps(state) {
     return {
-        logged:state.login.logged
+        logged: state.login.logged
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        checkUserIsLogedIn:dispatch(checkUserIsLogedIn())
+        checkUserIsLogedIn: dispatch(checkUserIsLogedIn())
     };
 }

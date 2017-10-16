@@ -17,10 +17,10 @@ export namespace Header {
   export interface Props {
     data: Array<any>;
     counts: Array<any>;
-    place:"BC"|"BT"|"UE";
+    place: "BC" | "BT" | "UE";
     loadSearchData: (startDate, endDate, count, esxtense) => void;
-    filterDataByPlace:(place:string)=>void;
-    logOut:()=>void;
+    filterDataByPlace: (place: string) => void;
+    logOut: () => void;
   }
 
   export interface State {
@@ -40,7 +40,7 @@ export class Header extends React.Component<Header.Props, Header.State> {
   constructor(props: Header.Props) {
     super(props);
     this.state = {
-      konto: "0",
+      konto: "Svi",
       periodOd: new Date(new Date().setMonth(new Date().getMonth() - 1)),
       periodDo: new Date(),
       mesto: "SvaVozila",
@@ -54,16 +54,6 @@ export class Header extends React.Component<Header.Props, Header.State> {
   }
 
 
-  private _onFilterChanged(filterText: string, tagList: { key: string, name: string }[]) {
-    return filterText ? _testTags.filter(tag => tag.name.toLowerCase().indexOf(filterText.toLowerCase()) === 0).filter(item => !this._listContainsDocument(item, tagList)) : [];
-  }
-
-  private _listContainsDocument(tag: { key: string, name: string }, tagList: { key: string, name: string }[]) {
-    if (!tagList || !tagList.length || tagList.length === 0) {
-      return false;
-    }
-    return tagList.filter(compareTag => compareTag.key === tag.key).length > 0;
-  }
 
   private renderButtons() {
     return Object.keys(ExpensesType).map((key, index, array) => {
@@ -76,7 +66,7 @@ export class Header extends React.Component<Header.Props, Header.State> {
     }
       ).map(i => {
         return <PrimaryButton checked={i.key === this.state.filter} text={i.text} onClick={() => (this.setState({ ...this.state, filter: i.key }),
-          this.props.loadSearchData(this.state.periodOd, this.state.periodDo, this.state.konto, i.key))} />
+          this.props.loadSearchData(this.state.periodOd, this.state.periodDo, this.state.konto!=="Svi"?this.state.konto:0, i.key))} />
       })
   }
 
@@ -84,8 +74,8 @@ export class Header extends React.Component<Header.Props, Header.State> {
     return (
       <header className={style.searchHeader}>
         <div className={style.searchControlRow}>
-          <img className={style.searchHeaderImage} src="http://vicont.rs/images/vicont_vektor_logo.png" alt="Vicont"/>
-          <DefaultButton onClick={()=>this.props.logOut()}>Izloguj se</DefaultButton>
+          <img className={style.searchHeaderImage} src="http://vicont.rs/images/vicont_vektor_logo.png" alt="Vicont" />
+          <DefaultButton onClick={() => this.props.logOut()}>Izloguj se</DefaultButton>
         </div>
         <div className={style.searchRow}>
           <DatePicker formatDate={(date) => date.toLocaleDateString()} placeholder='Period od' value={this.state.periodOd} onSelectDate={(value) => this.setState({ ...this.state, periodOd: value })} />
@@ -96,7 +86,7 @@ export class Header extends React.Component<Header.Props, Header.State> {
             onClick={() => { alert("Rade, napravi servis!") }}
           />
           <ChoiceGroup
-            disabled={this.state.konto!=="0"}
+            disabled={this.state.konto !== "Svi"}
             className={style.choiseGroup}
             onChange={(ev, option) => this.props.filterDataByPlace(option.key)}
             selectedKey={this.props.place}
@@ -128,25 +118,12 @@ export class Header extends React.Component<Header.Props, Header.State> {
         </div>
         <div className={style.searchRow}>
           <Label>Za konto</Label>
-          <TagPicker ref='tagPicker'
-            onResolveSuggestions={this._onFilterChanged.bind(this)}
-            pickerSuggestionsProps={
-              {
-                suggestionsHeaderText: 'Konto broj',
-                noResultsFoundText: 'Nema zadatog konta'
-              }
-            }
-            onChange={(items) => {
-              items[0] ?
-                (this.setState({ ...this.state, konto: items[0].name }),this.props.filterDataByPlace("SV")) :
-                this.setState({ ...this.state, konto: "0" })
-            }
-            }
-          />
+          <TextField value={this.state.konto} errorMessage={!(this.props.counts.indexOf(this.state.konto) !== -1 || this.state.konto==="Svi") && "Pogrešan konto"} onChanged={newValue => this.setState({ ...this.state, konto: newValue })} />
           <PrimaryButton
+            disabled={this.props.counts.indexOf(this.state.konto) === -1}
             data-automation-id='test'
             text='Izlistaj sve intervencije za dati konto'
-            onClick={() => Number(this.state.konto)===0?alert("Niste odabrali konto"):(this.props.loadSearchData(this.state.periodOd, this.state.periodDo, this.state.konto, 111),this.setState({filter:"0"}))}
+            onClick={() => (this.props.loadSearchData(this.state.periodOd, this.state.periodDo,this.state.konto!=="Svi"?this.state.konto:0, 111), this.setState({ filter: "111" }))}
           />
           <DefaultButton
             data-automation-id='test'
@@ -154,11 +131,12 @@ export class Header extends React.Component<Header.Props, Header.State> {
             onClick={() => alert('Clicked')}
           />
           {/* <a target="_blank" href={`${location.origin}/TechnicalCharacteristics/${this.state.konto}`}>Tehnicke karakteristike</a> */}
-            <DefaultButton
-              data-automation-id='test'
-              text='Tehničke karakteristike vozila'
-              onClick={() => { window.open(`${location.origin}/TechnicalCharacteristics/${this.state.konto}`, '_blank');}}
-            />
+          <DefaultButton
+            disabled={this.props.counts.indexOf(this.state.konto) === -1}
+            data-automation-id='test'
+            text='Tehničke karakteristike vozila'
+            onClick={() => { window.open(`${location.origin}/TechnicalCharacteristics/${this.state.konto}`, '_blank'); }}
+          />
         </div>
         <div className={style.searchRow}>
           <Label>Filtriraj</Label>
