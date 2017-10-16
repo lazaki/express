@@ -118,7 +118,7 @@ export class Header extends React.Component<Header.Props, Header.State> {
         </div>
         <div className={style.searchRow}>
           <Label>Za konto</Label>
-          <TextField value={this.state.konto} errorMessage={!(this.props.counts.indexOf(this.state.konto) !== -1 || this.state.konto==="Svi") && "Pogrešan konto"} onChanged={newValue => this.setState({ ...this.state, konto: newValue })} />
+          <TextField value={this.state.konto} errorMessage={!(this.props.counts.indexOf(this.state.konto) !== -1 || this.state.konto==="Svi") && "Pogrešan konto"} onChanged={newValue =>{if(newValue!=="SVI"){this.props.filterDataByPlace("SV")} this.setState({ ...this.state, konto: newValue })}} />
           <PrimaryButton
             disabled={this.props.counts.indexOf(this.state.konto) === -1}
             data-automation-id='test'
