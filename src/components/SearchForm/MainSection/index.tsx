@@ -123,7 +123,7 @@ export class MainSection extends React.Component<MainSection.Props, MainSection.
         className: style.tableCell,
         onColumnClick: this.onColumnClick.bind(this)
       }
-    }).filter(column => { if(column.key !== "Id" && column.key !== "EndDate") {
+    }).filter(column => { if(column.key !== "Id" && column.key !== "EndDate" && column.key !== "Count" && column.key !== "Place") {
       return true;
     }
     return false;

@@ -66,7 +66,7 @@ export class Header extends React.Component<Header.Props, Header.State> {
     }
       ).map(i => {
         return <PrimaryButton checked={i.key === this.state.filter} text={i.text} onClick={() => (this.setState({ ...this.state, filter: i.key }),
-          this.props.loadSearchData(this.state.periodOd, this.state.periodDo, this.state.konto!=="Svi"?this.state.konto:0, i.key))} />
+          this.props.loadSearchData(this.state.periodOd, this.state.periodDo, this.state.konto !== "Svi" ? this.state.konto : 0, i.key))} />
       })
   }
 
@@ -118,12 +118,12 @@ export class Header extends React.Component<Header.Props, Header.State> {
         </div>
         <div className={style.searchRow}>
           <Label>Za konto</Label>
-          <TextField value={this.state.konto} errorMessage={!(this.props.counts.indexOf(this.state.konto) !== -1 || this.state.konto==="Svi") && "Pogrešan konto"} onChanged={newValue =>{if(newValue!=="SVI"){this.props.filterDataByPlace("SV")} this.setState({ ...this.state, konto: newValue })}} />
+          <TextField value={this.state.konto} errorMessage={!(this.props.counts.indexOf(this.state.konto) !== -1 || this.state.konto === "Svi") && "Pogrešan konto"} onChanged={newValue => { if (newValue !== "SVI") { this.props.filterDataByPlace("SV") } this.setState({ ...this.state, konto: newValue }) }} />
           <PrimaryButton
             disabled={this.props.counts.indexOf(this.state.konto) === -1}
             data-automation-id='test'
             text='Izlistaj sve intervencije za dati konto'
-            onClick={() => (this.props.loadSearchData(this.state.periodOd, this.state.periodDo,this.state.konto!=="Svi"?this.state.konto:0, 111), this.setState({ filter: "111" }))}
+            onClick={() => (this.props.loadSearchData(this.state.periodOd, this.state.periodDo, this.state.konto !== "Svi" ? this.state.konto : 0, 111), this.setState({ filter: "111" }))}
           />
           <DefaultButton
             data-automation-id='test'
@@ -150,8 +150,9 @@ export class Header extends React.Component<Header.Props, Header.State> {
             text='Tehničke karakteristike vozila'
             onClick={() => alert('Clicked')}
           />
-        </div>
-        <Sum place={this.props.place} data={this.props.data} konto={this.state.konto} periodOd={this.state.periodOd} periodDo={this.state.periodDo} filter={this.state.filter}></Sum>
+        </div>{(this.props.counts.indexOf(this.state.konto) !== -1 || this.state.konto === "Svi") ?
+          <Sum place={this.props.place} data={this.props.data} konto={this.state.konto} periodOd={this.state.periodOd} periodDo={this.state.periodDo} filter={this.state.filter}></Sum>
+          : ""}
       </header>
     );
   }
